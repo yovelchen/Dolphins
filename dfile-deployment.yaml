@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dolphins-deployment
+  name: dolphins-deployment
+spec:
+  selector:
+    matchLabels:
+      app: dolphins-deployment
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: dolphins-deployment
+      name: dolphins-deployment
+    spec:
+      containers:
+        - name: dolphins-deployment
+          image: yovelchen/dolphins:1.0.0
+          volumeMounts:
+            - readOnly: true
+              mountPath: /app
+              name: html-files
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: html-files
+          configMap:
+            name: dolphins-content
+
+
